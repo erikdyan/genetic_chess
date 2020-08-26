@@ -38,9 +38,12 @@ def train(white_wins, black_wins):
         for individual in population:
             # 1. Mutate.
             if random.random() < MUTATION_RATE:
-                individual.genes[random.choice(list(individual.genes))] = random.randint(
-                    Individual.GENE_MIN, Individual.GENE_MAX
-                )
+                gene = random.choice(list(individual.genes))
+                if gene == 'PAWN_VALUE' or gene == 'KNIGHT_VALUE' or gene == 'BISHOP_VALUE' or gene == 'ROOK_VALUE' or \
+                        gene == 'QUEEN_VALUE':
+                    individual.genes[gene] = random.randint(Individual.GENE_MIN, Individual.MATERIAL_MAX)
+                else:
+                    individual.genes[gene] = random.randint(Individual.GENE_MIN, Individual.GENE_MAX)
 
             # 2. Assess fitness.
             individual.reset_fitness()
